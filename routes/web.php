@@ -12,3 +12,12 @@
 */
 
 Route::get('/', '\App\Http\Controllers\TableController@index');
+
+Route::prefix('/api')
+    ->namespace('Api')
+    ->group(function() {
+        Route::get('/portals/{id?}', 'PortalsController@index');
+        Route::get('/platforms/{id?}', 'PlatformsController@index');
+        Route::get('/products/{id?}', 'PlatformsController@index');
+        Route::get('/tags/{id?}', 'PlatformsController@index');
+    });

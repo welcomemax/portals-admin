@@ -1,22 +1,34 @@
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+import angular from 'angular';
 
-require('./bootstrap');
+import tableTemplate from '../'
 
-window.Vue = require('vue');
+const app = angular.module('portals', ['ngRoute'])
+    .constant('API_URL', '/api/');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+app.config(function($routeProvider) {
+    $routeProvider
+        .when('/', {
+            controller: 'tableController',
+            templateUrl: '../templates/list.html'
+        })
+        .when('/edit/:itemId', {
+            controller: 'detailController',
+            templateUrl: '../templates/detail.html'
+        })
+        .when('/new', {
+            controller: 'detailController',
+            templateUrl: '../templates/detail.html'
+        })
+        .otherwise({
+            redirectTo: '/'
+        });
+});
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
-const app = new Vue({
-    el: '#app'
+app.controller('tableController', function($scope, $http) {
+    $http.get(API_URL + 'items').then(function(response) {
+
+
+    });
 });
