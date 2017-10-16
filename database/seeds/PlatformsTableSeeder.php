@@ -18,7 +18,9 @@ class PlatformsTableSeeder extends Seeder
         foreach ($config_platforms as $alias => $config_platform) {
             $platform = $platforms->where('alias', $alias)->first();
 
-            if (empty($product)) {
+            $config_platform['alias'] = $alias;
+
+            if (empty($platform)) {
                 Platform::create($config_platform);
             } else {
                 $platform->update($config_platform);

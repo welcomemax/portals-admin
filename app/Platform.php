@@ -10,6 +10,7 @@ class Platform extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'alias',
         'name',
         'description',
         'icon',

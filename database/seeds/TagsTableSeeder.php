@@ -13,37 +13,41 @@ class TagsTableSeeder extends Seeder
     public function run()
     {
         $config_tags = [
-            [
+            1 => [
                 'text' => 'Deployed',
                 'color' => 'green'
             ],
-            [
+            2 => [
                 'text' => 'Ready',
                 'color' => 'blue'
             ],
-            [
+            3 => [
                 'text' => 'In Progress',
                 'color' => 'blue'
             ],
-            [
+            4 => [
                 'text' => 'Waiting',
                 'color' => 'yellow'
             ],
-            [
+            5 => [
                 'text' => 'Deffered',
                 'color' => 'black'
             ],
-            [
+            6 => [
                 'text' => 'Nope',
                 'color' => 'red'
+            ],
+            7 => [
+                'text' => 'New',
+                'color' => 'white'
             ]
         ];
         $tags = Tag::get()->keyBy('id');
 
         foreach ($config_tags as $id => $config_tag) {
-            $tag = $tags->where('text', $id)->first();
+            $tag = $tags->where('id', $id)->first();
 
-            if (empty($product)) {
+            if (empty($tag)) {
                 Tag::create($config_tag);
             } else {
                 $tag->update($config_tag);

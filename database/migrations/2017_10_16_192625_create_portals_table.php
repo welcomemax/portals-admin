@@ -29,6 +29,7 @@ class CreatePortalsTable extends Migration
             $table->integer('portal')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

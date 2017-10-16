@@ -18,6 +18,8 @@ class ProductsTableSeeder extends Seeder
         foreach ($config_products as $alias => $config_product) {
             $product = $products->where('alias', $alias)->first();
 
+            $config_product['alias'] = $alias;
+
             if (empty($product)) {
                 Product::create($config_product);
             } else {
