@@ -60,31 +60,37 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-__webpack_require__(1);
-module.exports = __webpack_require__(6);
-
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(2);
+module.exports = __webpack_require__(0);
+
+
+/***/ }),
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_angular__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular_route__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular_route__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angular_route___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angular_route__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stylus_app_styl__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stylus_app_styl__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stylus_app_styl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__stylus_app_styl__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__layouts_table_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__layouts_detail_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__layouts_table_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__layouts_detail_js__ = __webpack_require__(12);
 
 
 
@@ -93,7 +99,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var portals = angular.module('portals', ['ngRoute', 'portals.table']);
+var portals = angular.module('portals', ['ngRoute', 'portals.table', 'portals.detail']);
 
 portals.config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
     $locationProvider.hashPrefix('!');
@@ -101,16 +107,32 @@ portals.config(['$locationProvider', '$routeProvider', function ($locationProvid
     $routeProvider.otherwise({ redirectTo: '/' });
 }]);
 
+portals.controller('portalsController', ['$scope', 'fetcher', function ($scope, fetcher) {
+
+    fetcher().then(function (response) {
+        $scope.platforms = response[0].data;
+        $scope.products = response[1].data;
+        $scope.portals = response[2].data;
+        $scope.tags = response[3].data;
+    });
+}]);
+
+portals.factory('fetcher', ['$http', '$q', function ($http, $q) {
+    return function () {
+        return $q.all([$http.get('/api/platforms/'), $http.get('/api/products/'), $http.get('/api/portals/'), $http.get('/api/tags/')]);
+    };
+}]);
+
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(3);
+__webpack_require__(4);
 module.exports = angular;
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 /**
@@ -34004,15 +34026,15 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(5);
+__webpack_require__(6);
 module.exports = 'ngRoute';
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 /**
@@ -35247,26 +35269,15 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stylus_layouts_table_styl__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stylus_layouts_table_styl__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stylus_layouts_table_styl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__stylus_layouts_table_styl__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_tile_js__ = __webpack_require__(9);
+
+
 
 
 var table = angular.module('portals.table', ['ngRoute']);
@@ -35279,25 +35290,57 @@ table.config(function ($routeProvider) {
 });
 
 table.controller('tableController', function ($scope, $http) {
-    $http.get('/api/portals/').then(function (response) {
-        $scope.portals = response;
 
-        console.log($scope.portals);
-    });
+    // console.log('tableController scope')
+    // console.log($scope)
+
 });
 
+table.directive('tableTile', __WEBPACK_IMPORTED_MODULE_1__components_tile_js__["a" /* default */]);
+
 /***/ }),
-/* 16 */
+/* 8 */
 /***/ (function(module, exports) {
 
 
 
 /***/ }),
-/* 17 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stylus_layouts_detail_styl__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__html_components_tile_html__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__html_components_tile_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__html_components_tile_html__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stylus_components_tile_styl__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stylus_components_tile_styl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__stylus_components_tile_styl__);
+
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = (function ($compile, $rootScope) {
+    return {
+        template: __WEBPACK_IMPORTED_MODULE_0__html_components_tile_html___default.a
+    };
+});
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"tile\">\r\n    <span>Product: {{ portal.product_id }}</span>\r\n    <span>Platform: {{ portal.platform_id }}</span>\r\n    <span>Status: {{ portal.status }}</span>\r\n</div>";
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stylus_layouts_detail_styl__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stylus_layouts_detail_styl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__stylus_layouts_detail_styl__);
 
 
@@ -35316,7 +35359,7 @@ detail.config(function ($routeProvider) {
 detail.controller('detailController', function ($scope, $http) {});
 
 /***/ }),
-/* 18 */
+/* 13 */
 /***/ (function(module, exports) {
 
 

@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Portals Admin</title>
+
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
-    <div ng-view></div>
-    <pre>{{ dump($portals) }}</pre>
+    <div ng-view ng-controller="portalsController"></div>
 
     <script src="{{asset('js/app.js')}}"></script>
 </body>

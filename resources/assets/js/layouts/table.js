@@ -1,5 +1,7 @@
 import './../../stylus/layouts/table.styl';
 
+import tableTile from './../components/tile.js'
+
 let table = angular.module('portals.table', ['ngRoute']);
 
 table.config(function($routeProvider) {
@@ -11,9 +13,11 @@ table.config(function($routeProvider) {
 });
 
 table.controller('tableController', function($scope, $http) {
-    $http.get('/api/portals/').then(function(response) {
-        $scope.portals = response;
 
-        console.log($scope.portals)
-    });
+    // console.log('tableController scope')
+    // console.log($scope)
+
 });
+
+table.directive('tableTile', tableTile)
+
