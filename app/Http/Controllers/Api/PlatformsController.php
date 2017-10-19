@@ -18,7 +18,7 @@ class PlatformsController extends Controller
     public function index($id = null)
     {
         if ($id == null) {
-            $platforms = Platform::get();
+            $platforms = Platform::get()->keyBy('id');
         } else {
             $platforms = Platform::find($id);
         }

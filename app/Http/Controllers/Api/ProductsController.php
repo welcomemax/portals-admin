@@ -18,7 +18,7 @@ class ProductsController extends Controller
     public function index($id = null)
     {
         if ($id == null) {
-            $products = Product::get();
+            $products = Product::get()->keyBy('id');
         } else {
             $products = Product::find($id);
         }

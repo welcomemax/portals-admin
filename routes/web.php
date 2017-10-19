@@ -18,6 +18,6 @@ Route::prefix('/api')
     ->group(function() {
         Route::get('/portals/{id?}', 'PortalsController@index');
         Route::get('/platforms/{id?}', 'PlatformsController@index');
-        Route::get('/products/{id?}', 'PlatformsController@index');
-        Route::get('/tags/{id?}', 'PlatformsController@index');
+        Route::get('/products/{id?}', 'ProductsController@index');
+        Route::get('/tags/{id?}', 'TagsController@index');
     });

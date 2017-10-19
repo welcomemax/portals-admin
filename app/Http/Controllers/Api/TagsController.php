@@ -18,7 +18,7 @@ class TagsController extends Controller
     public function index($id = null)
     {
         if ($id == null) {
-            $tags = Tag::get();
+            $tags = Tag::get()->keyBy('id');
         } else {
             $tags = Tag::find($id);
         }

@@ -16,5 +16,9 @@ const config = {
 };
 
 elixir(function(mix) {
-    mix.webpack('app.js', null, null, config);
+    mix
+        .webpack('app.js', null, null, config)
+        // .browserSync({
+        //     proxy: '127.0.0.1:8000'
+        // });
 });

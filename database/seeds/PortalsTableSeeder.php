@@ -22,13 +22,17 @@ class PortalsTableSeeder extends Seeder
             foreach ($platforms as $platform) {
                 $portal = $portals->where('product_id', $product->id)->where('platform_id', $platform->id)->first();
 
+                $standalone_platforms = array(
+                    'codecanyon',
+                    'shopify',
+                    'weebly',
+                );
+
                 $portal_default = [
-                    'version' => '1.0.0',
                     'product_id' => $product->id,
                     'platform_id' => $platform->id,
                     'status' => 7,
-                    'status_text' => 7,
-                    'status_images' => 7
+                    'portal' => in_array($platform->alias, $standalone_platforms) ? 0 : 1
                 ];
 
                 if (empty($portal)) {
