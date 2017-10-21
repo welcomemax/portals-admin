@@ -27,8 +27,6 @@ portals.controller('portalsController', ['$scope', 'fetcher', 'prepare', functio
             $scope.products = result.products;
             $scope.portals = result.portals;
             $scope.tags = result.tags;
-
-            console.log(result);
         });
     });
 
@@ -56,7 +54,6 @@ portals.factory('prepare', ['$q', function($q) {
             tags: rawData[3].data
         };
 
-        console.log(data.tags);
         data.portals.map(function (portal) {
             portal.status = data.tags[portal.status];
             portal.status_text = data.tags[portal.status_text];

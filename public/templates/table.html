@@ -1,3 +1,23 @@
-<div ng-repeat="portal in portals">
-    <div table-tile></div>
+<div class="app-header">
+
+</div>
+
+<div class="app-table">
+    <div class="column product-column">
+        <div ng-repeat="product in products">
+            <div product-tile></div>
+        </div>
+    </div>
+
+    <div class="column platform-column" ng-repeat="platform in platforms">
+        <div platform-tile></div>
+
+        <div ng-repeat="portal in portals" ng-if="portal.platform_id == platform.id">
+            <div portal-tile></div>
+        </div>
+    </div>
+</div>
+
+<div class="app-footer">
+
 </div>
